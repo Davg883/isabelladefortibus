@@ -1,64 +1,71 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Fade-in animation on scroll
-    const sections = document.querySelectorAll('.content-section');
+    // --- Fade-in Animation on Scroll ---
+    const fadeElements = document.querySelectorAll('.fade-in-element');
 
     const observerOptions = {
-        root: null, // relative to document viewport
+        root: null, // relative to the viewport
         rootMargin: '0px',
-        threshold: 0.1 // trigger when 10% of the element is visible
+        threshold: 0.1 // Trigger when 10% of the element is visible
     };
 
     const observerCallback = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optional: unobserve after animation to save resources
-                // observer.unobserve(entry.target);
+                observer.unobserve(entry.target); // Stop observing once visible
             }
-            // Optional: remove class if element scrolls out of view
-            // else {
-            //     entry.target.classList.remove('visible');
-            // }
         });
     };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
 
-    sections.forEach(section => {
-        observer.observe(section);
+    fadeElements.forEach(el => {
+        scrollObserver.observe(el);
     });
 
-    // Placeholder for Parallax effect (if more advanced than CSS background-attachment: fixed is needed)
+    // --- Hero Background Image ---
+    // Set hero background from HTML inline style (already done in HTML generation)
+    // const heroSection = document.getElementById('hero');
+    // if (heroSection && heroSection.style.backgroundImage) {
+    //     // Already set inline
+    // } else if (heroSection) {
+    //     // Fallback if needed, though inline is preferred from prompt
+    //     heroSection.style.backgroundImage = "url('Public/Image/Arial view.png')";
+    // }
 
-    // Interactive Hotspots Logic
-    const hotspots = document.querySelectorAll('.hotspot');
 
-    hotspots.forEach(hotspot => {
-        hotspot.addEventListener('click', (event) => {
-            // Prevent click from propagating to document listener if added later
-            event.stopPropagation();
+    // --- Interactive 'Then & Now' Comparison Slider ---
+    const slider = document.getElementById('comparisonSlider');
+    const afterImage = document.querySelector('.after-image');
 
-            // Close other active hotspots
-            hotspots.forEach(otherHotspot => {
-                if (otherHotspot !== hotspot) {
-                    otherHotspot.classList.remove('active');
-                }
-            });
+    if (slider && afterImage) {
+        slider.addEventListener('input', (e) => {
+            // Update the clip-path percentage based on slider value
+            afterImage.style.clipPath = `polygon(${e.target.value}% 0, 100% 0, 100% 100%, ${e.target.value}% 100%)`;
+        });
+    }
 
-            // Toggle active state for the clicked hotspot
-            hotspot.classList.toggle('active');
+    // --- Other Interactions (Placeholders/Examples) ---
+
+    // Example: Hover effect for specific elements (can also be done purely in CSS)
+    const hoverElements = document.querySelectorAll('.hover-effect-element');
+    hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            // Add a class or style on hover if needed beyond CSS :hover
+        });
+        el.addEventListener('mouseleave', () => {
+            // Remove class or style
         });
     });
 
-    // Optional: Close hotspots if clicking outside
-    document.addEventListener('click', () => {
-        hotspots.forEach(hotspot => {
-            hotspot.classList.remove('active');
-        });
-    });
-
-
-    // Placeholder for Timeline interactivity
+    // Example: Clickable detail reveal (if needed)
+    // const clickableDetails = document.querySelectorAll('.clickable-detail');
+    // clickableDetails.forEach(el => {
+    //     el.addEventListener('click', () => {
+    //         // Logic to reveal more info, e.g., toggle a class on a related element
+    //         console.log('Detail clicked:', el.alt);
+    //     });
+    // });
 
 });

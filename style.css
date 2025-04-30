@@ -6,98 +6,105 @@
 }
 
 html {
-    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: 'Lora', serif; /* Default body font */
-    line-height: 1.6;
-    color: #333; /* Default text color */
-    background-color: #f4f1ea; /* Parchment tone background */
+    font-family: 'Lora', serif; /* Body font */
+    line-height: 1.7;
+    color: #3a3a3a; /* Dark grey for text */
+    background-color: #fdfaf5; /* Aged parchment background */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Color Palette Variables */
 :root {
-    --deep-red: #8B0000;
-    --royal-blue: #4169E1;
-    --gold-ochre: #DAA520;
-    --parchment: #f4f1ea;
-    --stone-grey: #778899;
-    --earthy-green: #556B2F;
-    --text-dark: #333;
-    --text-light: #f8f8f8; /* For contrast on dark backgrounds */
+    --deep-red: #8B0000; /* #800000; */
+    --royal-blue: #4169E1; /* #3b5998; */
+    --burnished-gold: #DAA520; /* #b8860b; */
+    --aged-parchment: #fdfaf5;
+    --cool-stone-grey: #778899; /* #6c7a89; */
+    --text-dark: #3a3a3a;
+    --text-light: #f8f8f8;
+    --overlay-dark: rgba(0, 0, 0, 0.6); /* Dark overlay for hero */
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Merriweather', serif; /* Heading font */
+    font-family: 'Cormorant Garamond', serif; /* Heading font */
+    font-weight: 700;
     color: var(--deep-red);
-    margin-bottom: 0.8em;
-    line-height: 1.3;
+    margin-bottom: 0.7em;
+    line-height: 1.2;
 }
 
-h1 { font-size: 2.8rem; }
-h2 { font-size: 2.2rem; }
+h1 { font-size: 3.2rem; }
+h2 { font-size: 2.5rem; }
 h3 { font-size: 1.8rem; }
 
 p {
-    margin-bottom: 1em;
+    margin-bottom: 1.2em;
+    max-width: 70ch; /* Improve readability */
 }
 
 a {
     color: var(--royal-blue);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
+    color: var(--burnished-gold);
     text-decoration: underline;
 }
 
 img {
     max-width: 100%;
     height: auto;
-    display: block; /* Remove extra space below images */
+    display: block;
 }
 
 /* General Section Styling */
 .content-section {
-    padding: 60px 20px;
-    max-width: 1100px; /* Limit content width for readability */
-    margin: 0 auto; /* Center content */
-    opacity: 0; /* Initially hidden for fade-in animation */
-    transform: translateY(20px); /* Start slightly lower for fade-in */
+    padding: 80px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative; /* For potential absolute elements */
+}
+
+/* Fade-in Animation on Scroll */
+.fade-in-element {
+    opacity: 0;
+    transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.content-section.visible {
+.fade-in-element.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Hero Section */
+/* 1. Hero Section */
 .hero-section {
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: var(--text-light);
     position: relative;
-    overflow: hidden; /* Needed for parallax */
-    background-image: url('[HERO_IMAGE_PLACEHOLDER]'); /* Placeholder */
+    background-image: url('Public/Image/Arial view.png'); /* Fallback/Initial */
+    /* Actual background will be set via inline style from HTML */
     background-size: cover;
     background-position: center center;
-    background-attachment: fixed; /* Basic parallax effect */
+    background-attachment: fixed; /* Parallax effect */
 }
 
-.hero-section::before { /* Dark overlay for text contrast */
+.hero-section::before { /* Dark overlay */
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--overlay-dark);
     z-index: 1;
 }
 
@@ -105,563 +112,344 @@ img {
     position: relative;
     z-index: 2;
     padding: 20px;
+    animation: fadeInHeroText 1.5s ease-out forwards; /* Subtle animation */
+}
+
+@keyframes fadeInHeroText {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-content h1 {
-    color: var(--text-light); /* Override default heading color */
-    font-size: 3.5rem; /* Larger for hero */
-    margin-bottom: 0.5em;
+    color: var(--text-light);
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+    margin-bottom: 0.4em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .hero-content p {
-    font-size: 1.4rem;
-    color: var(--parchment);
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: var(--aged-parchment);
     margin-bottom: 1.5em;
-}
-
-.arrow-down {
-    font-size: 2rem;
-    margin-top: 20px;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
-
-/* Section 1: The Lady of the Isle (Two Column Layout) */
-.section-layout-two-col {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    gap: 40px; /* Space between columns */
-    align-items: center; /* Vertically align items */
-}
-
-.section-layout-two-col .column {
-    flex: 1; /* Each column takes equal space */
-    min-width: 300px; /* Minimum width before wrapping */
-}
-
-.section-layout-two-col .column-image img {
-    border: 5px solid var(--stone-grey); /* Optional border */
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
-}
-
-.section-layout-two-col .column-text .optional-image {
-    max-width: 150px; /* Smaller size for optional image */
-    margin-top: 20px;
-    border: 2px solid var(--gold-ochre);
-}
-
-/* Section 2: Carisbrooke Reimagined */
-.interactive-image-container {
-    position: relative; /* Needed for absolute positioning of hotspots */
-    margin: 30px 0;
-    max-width: 800px; /* Adjust as needed */
+    max-width: 60ch;
     margin-left: auto;
     margin-right: auto;
 }
 
-.main-interactive-image {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.hotspot {
+.scroll-indicator {
+    font-size: 2.5rem;
+    margin-top: 30px;
+    animation: bounce 2s infinite;
     position: absolute;
-    /* Top/Left positions set inline in HTML for now - adjust as needed */
-    transform: translate(-50%, -50%); /* Center the hotspot icon */
-    cursor: pointer;
-}
-
-.hotspot-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    background-color: var(--royal-blue);
-    color: var(--text-light);
-    border-radius: 50%;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: 2px solid var(--text-light);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.hotspot:hover .hotspot-icon {
-    transform: scale(1.2);
-    background-color: var(--gold-ochre);
-}
-
-.hotspot-content {
-    display: none; /* Hidden by default */
-    position: absolute;
-    bottom: 120%; /* Position above the icon */
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: var(--text-light);
-    padding: 15px;
-    border-radius: 5px;
-    width: 250px; /* Adjust width as needed */
-    z-index: 10;
-    text-align: left;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-.hotspot-content h3 {
-    color: var(--gold-ochre); /* Use accent color for heading */
-    font-size: 1.1rem;
-    margin-bottom: 0.5em;
+@keyframes bounce { /* Reusing bounce animation */
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -10px); }
+    60% { transform: translate(-50%, -5px); }
 }
 
-.hotspot-content p {
-    font-size: 0.9rem;
-    margin-bottom: 0;
-    color: var(--parchment);
-}
-
-/* Style to show content on hover/click (JS will handle click) */
-.hotspot:hover .hotspot-content,
-.hotspot.active .hotspot-content {
-    display: block;
-}
-
-.supporting-images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.grid-item {
-    text-align: center;
-}
-
-.grid-item img {
-    border: 3px solid var(--stone-grey);
-    margin-bottom: 10px;
-}
-
-.grid-item p {
-    font-size: 0.9rem;
-    color: var(--text-dark);
-}
-
-/* Hide optional items if needed by default or via class */
-/* .optional-item { display: none; } */
-
-/* NEW Section 3: Castle Enhancements */
-#castle-enhancements .comparison-container {
+/* 2. Section: The Countess Ascendant (Asymmetric Layout) */
+.section-layout-asymmetric {
     display: flex;
-    flex-direction: column; /* Stack on mobile */
-    gap: 30px;
-    margin-top: 30px;
-}
-
-#castle-enhancements .comparison-column {
-    flex: 1;
-    text-align: center;
-}
-
-#castle-enhancements .comparison-image {
-    border: 4px solid var(--stone-grey);
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
-    margin-bottom: 15px;
-}
-
-.comparison-caption {
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--text-dark);
-    margin-bottom: 10px;
-}
-
-/* Responsive adjustment for comparison layout */
-@media (min-width: 769px) {
-    #castle-enhancements .comparison-container {
-        flex-direction: row; /* Side-by-side on larger screens */
-    }
-}
-
-/* NEW Section 3: Castle Enhancements - Video Styling */
-.video-container {
-    margin: 30px auto; /* Center the video container */
-    max-width: 800px; /* Limit video width */
-    position: relative;
-    overflow: hidden;
-    border: 4px solid var(--stone-grey); /* Add border for consistency */
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
-}
-
-.comparison-video {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-
-/* Section 4: Life Within the Walls (Alternating Layout) */
-.alternating-layout {
-    margin-top: 40px;
-}
-
-.alternating-layout .layout-item {
-    display: flex;
-    flex-wrap: wrap; /* Allow wrapping within items if needed */
-    gap: 30px;
-    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 50px;
     align-items: center;
 }
 
-/* Basic alternating pattern using nth-child */
-.alternating-layout .layout-item:nth-child(even) {
-    flex-direction: row-reverse; /* Reverse order for even items */
+.section-layout-asymmetric .column-visual {
+    flex: 1 1 40%; /* Allow visual to take up significant space */
+    min-width: 300px;
 }
 
-.alternating-layout .text-block,
-.alternating-layout .image-block {
-    flex: 1;
-    min-width: 300px; /* Ensure blocks don't get too narrow */
+.section-layout-asymmetric .column-text {
+    flex: 1 1 55%; /* Text takes slightly more space */
+    min-width: 320px;
 }
 
-.alternating-layout .image-block img {
+.vertical-image-container img {
+    border: 6px solid var(--cool-stone-grey);
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.2);
+    /* Subtle zoom/pan on scroll handled by JS if needed, or basic CSS scale */
+    transition: transform 0.5s ease;
+}
+/* Example hover effect (JS can trigger on scroll) */
+/* .vertical-image-container img:hover,
+.vertical-image-container img.visible {
+    transform: scale(1.03);
+} */
+
+.supporting-visual {
+    max-width: 120px; /* Smaller shield */
+    margin-top: 25px;
+    border: 3px solid var(--burnished-gold);
+}
+
+/* 3. Section: Carisbrooke Reimagined */
+.comparison-slider-container {
+    margin: 40px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.comparison-images {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Adjust aspect ratio based on images */
+    overflow: hidden;
+    border: 4px solid var(--cool-stone-grey);
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
+}
+
+.comparison-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area */
+}
+
+.after-image {
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); /* Initial clip */
+}
+
+.slider {
+    width: 100%;
+    margin-top: 10px;
+    cursor: ew-resize;
+}
+
+.detail-visuals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.detail-item {
+    text-align: center;
+}
+
+.detail-item img {
+    border: 3px solid var(--cool-stone-grey);
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-effect-element:hover {
+    box-shadow: 0 0 15px var(--burnished-gold); /* Glow effect */
+}
+
+.detail-item p {
+    font-size: 0.95rem;
+    max-width: 100%; /* Allow text to fill grid item */
+}
+
+/* 4. Section: The Great Hall */
+#great-hall .full-width-visual {
+    width: 100%;
+    margin: 30px 0;
+    border: 5px solid var(--cool-stone-grey);
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+}
+
+#great-hall h2 {
+    text-align: center;
+}
+
+#great-hall p {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 5. Section: Administration & Wealth */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.admin-grid .grid-image {
+    border: 4px solid var(--cool-stone-grey);
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.admin-grid .hover-effect-element:hover {
+    transform: scale(1.05); /* Magnify effect */
+    z-index: 5; /* Bring to front */
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.25);
+}
+
+.admin-grid .portrait-feature {
+    /* Specific styling if needed */
+}
+
+/* 6. Section: Daily Life & Devotion */
+.daily-life-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    align-items: start; /* Align items to the top */
+}
+
+.daily-life-grid .grid-image {
     border: 4px solid var(--earthy-green);
     box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
 }
 
-.alternating-layout .text-block img { /* Styling for images within text blocks */
-    max-width: 200px; /* Smaller images */
-    margin-top: 15px;
-    border: 2px solid var(--gold-ochre);
+.daily-life-grid .landscape-span {
+    grid-column: span 2; /* Example: Make landscape image span columns if needed */
 }
 
-/* Styling for the new social media hero image in Section 4 */
-.social-media-hero-image {
-    max-width: 300px; /* Adjust size as needed */
-    margin-top: 20px;
-    border: 4px solid var(--deep-red); /* Use a theme color */
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
-    display: block; /* Ensure it's on its own line */
-    margin-left: auto; /* Center if needed, or adjust layout */
-    margin-right: auto;
-}
-
-.alternating-layout .caption {
-    font-size: 0.85rem;
-    font-style: italic;
-    color: var(--stone-grey);
-    text-align: center;
-    margin-top: 8px;
-    margin-bottom: 0;
-}
-
-/* Section 5: Power, Politics (Focused Layout) */
-.section-layout-focused {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    align-items: flex-start; /* Align items to the top */
-}
-
-.section-layout-focused .column-text {
-    flex: 2; /* Give text column more space */
-    min-width: 300px;
-}
-
-.section-layout-focused .column-image {
-    flex: 1; /* Image column takes less space */
-    min-width: 250px;
-    display: flex;
-    flex-direction: column; /* Stack images vertically */
-    gap: 20px; /* Space between stacked images */
-}
-
-.section-layout-focused .column-image img {
-    border: 4px solid var(--deep-red); /* Use theme color */
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
-}
-
-.section-layout-focused .column-text img { /* Optional image within text */
-     max-width: 150px;
-     margin-top: 15px;
-     border: 2px solid var(--gold-ochre);
-}
-
-/* Section 6: View From The Keep (Wide Image Layout) */
-.section-layout-wide-image {
-    width: 100%; /* Make image span the container width */
-    margin: 20px 0; /* Add some space around the image */
-    border: 5px solid var(--stone-grey);
+/* 7. Section: Power & Politics */
+#power-politics .full-width-visual {
+    width: 100%;
+    margin: 30px 0;
+    border: 5px solid var(--deep-red); /* Use theme color */
     box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
-    text-align: center; /* Center content within this section */
 }
 
-.section-layout-wide-image h2 { /* Center the heading */
+#power-politics p {
+    /* Styling for text in this section */
+}
+
+/* 8. Section: Landscape & Legacy */
+.landscape-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.landscape-grid .grid-image {
+    border: 4px solid var(--cool-stone-grey);
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 9. Section: Explore Further (Audio) */
+#explore-further {
     text-align: center;
+    background-color: var(--aged-parchment); /* Slightly different background */
+    border-top: 1px solid var(--cool-stone-grey);
+    border-bottom: 1px solid var(--cool-stone-grey);
 }
 
-.section-layout-wide-image p {
-    text-align: center; /* Center the text below the image */
-    max-width: 800px; /* Limit text width for readability */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.section-layout-wide-image img:not(.wide-image) { /* Optional image styling */
-    max-width: 300px;
-    margin: 20px auto; /* Center optional image */
-    border: 2px solid var(--earthy-green);
-}
-
-/* Section 7: Timeline & Legacy */
-.timeline {
-    position: relative;
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px 0;
-}
-
-/* The vertical line */
-.timeline::after {
-    content: '';
-    position: absolute;
-    width: 4px;
-    background-color: var(--gold-ochre);
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -2px; /* Center the line */
-}
-
-.timeline-item {
-    padding: 10px 40px;
-    position: relative;
-    background-color: inherit;
-    width: 50%;
-}
-
-/* Circle on the timeline */
-.timeline-item::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: -12px; /* Position circle on the line */
-    background-color: var(--parchment);
-    border: 4px solid var(--royal-blue);
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-/* Place items on the left */
-.timeline-item:nth-child(odd) {
-    left: 0;
-    text-align: right; /* Align text to the right */
-}
-
-/* Place items on the right */
-.timeline-item:nth-child(even) {
-    left: 50%;
-}
-
-/* Adjust circle position for left items */
-.timeline-item:nth-child(odd)::after {
-    left: -12px; /* Position circle on the line */
-}
-
-/* Arrow pointing towards the content (optional) */
-/* .timeline-item::before { ... } */
-
-.timeline-date {
-    font-family: 'Merriweather', serif;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--royal-blue);
-    margin-bottom: 5px;
-}
-
-.timeline-content {
-    padding: 15px 20px;
-    background-color: var(--parchment);
-    border: 1px solid var(--stone-grey);
-    border-radius: 6px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-}
-
-.timeline-content h3 {
-    font-size: 1.3rem;
-    color: var(--deep-red);
-    margin-bottom: 0.4em;
-}
-
-.timeline-content p {
-    font-size: 0.95rem;
-    margin-bottom: 0;
-}
-
-.legacy-text {
-    margin-top: 50px;
-    text-align: center;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.legacy-text h3 {
-    font-size: 1.6rem;
-    color: var(--earthy-green);
-}
-
-.legacy-text .campaign-link {
+.podcast-link-container {
     margin-top: 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--deep-red);
 }
 
-.legacy-text img { /* Optional image styling */
-    max-width: 300px;
-    margin: 20px auto;
-    border: 3px solid var(--stone-grey);
-}
-
-/* Section 1: Audio Player Styling */
-.audio-container {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: var(--parchment); /* Use a theme color */
-    border: 2px solid var(--gold-ochre); /* Add a border */
+.podcast-link {
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    padding: 12px 25px;
+    background-color: var(--deep-red);
+    color: var(--text-light);
     border-radius: 8px;
-    text-align: center; /* Center the content */
-    max-width: 400px; /* Limit width */
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
 }
 
-.audio-container audio {
-    width: 100%; /* Make the audio player fill the container width */
-    margin-bottom: 10px;
+.podcast-link:hover {
+    background-color: var(--burnished-gold);
+    color: var(--text-dark);
+    text-decoration: none;
+    transform: translateY(-2px);
 }
 
-.audio-container p {
+.podcast-icon {
+    font-size: 1.5em; /* Make icon larger */
+    margin-right: 10px;
+}
+
+.podcast-link-container p {
+    margin-top: 15px;
     font-size: 1rem;
     color: var(--text-dark);
-    margin-bottom: 0;
 }
 
-
-/* Responsive Design Adjustments */
-@media (max-width: 768px) {
-    /* Make timeline vertical */
-    .timeline::after {
-        left: 31px; /* Move line to the left */
-    }
-    /* Remove comparison layout specific responsive rule */
-    /*
-    #castle-enhancements .comparison-container {
-        flex-direction: column;
-    }
-    */
-    .timeline-item {
-        width: 100%;
-        padding-left: 70px; /* Space for line and circle */
-        padding-right: 25px;
-        text-align: left; /* Align all text left */
-    }
-    .timeline-item:nth-child(odd),
-    .timeline-item:nth-child(even) {
-        left: 0%; /* Reset left positioning */
-    }
-    .timeline-item::after {
-        left: 19px; /* Position circle on the left line */
-    }
-    .timeline-item:nth-child(odd)::after {
-        left: 19px; /* Ensure consistent circle position */
-    }
-
-    .section-layout-focused {
-        flex-direction: column; /* Stack columns */
-    }
-
-    .alternating-layout .layout-item,
-    .alternating-layout .layout-item:nth-child(even) {
-        flex-direction: column; /* Stack items vertically */
-    }
-
-    .section-layout-two-col {
-        flex-direction: column; /* Stack columns */
-    }
-
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.8rem; }
-    h3 { font-size: 1.5rem; }
-
-    .hero-content h1 { font-size: 2.5rem; }
-    .hero-content p { font-size: 1.2rem; }
-
-    .content-section { padding: 40px 15px; }
-}
-
-@media (max-width: 480px) {
-    h1 { font-size: 1.8rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.3rem; }
-
-    .hero-content h1 { font-size: 2rem; }
-    .hero-content p { font-size: 1rem; }
-}
-
-/* Footer */
+/* 10. Footer */
 #footer {
-    background-color: var(--stone-grey); /* Use a theme color */
-    color: var(--parchment);
+    background-color: var(--text-dark);
+    color: var(--aged-parchment);
     text-align: center;
-    padding: 30px 20px;
-    margin-top: 40px; /* Space above the footer */
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.footer-branding-image {
+    max-width: 250px; /* Control size of branding image */
+    margin-bottom: 20px;
+    opacity: 0.8;
 }
 
 #footer p {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8em;
     font-size: 0.9rem;
+    max-width: 100%;
 }
 
 #footer strong {
-    color: var(--gold-ochre); /* Highlight hashtag */
+    color: var(--burnished-gold);
 }
 
 .social-links {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .social-links a {
-    color: var(--parchment);
-    margin: 0 10px;
-    font-size: 1.1rem;
+    color: var(--aged-parchment);
+    margin: 0 12px;
+    font-size: 1.3rem;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .social-links a:hover {
-    color: var(--gold-ochre);
+    color: var(--burnished-gold);
     text-decoration: none;
 }
 
 .copyright {
     font-size: 0.8rem;
-    margin-top: 15px;
-    opacity: 0.7;
+    margin-top: 20px;
+    opacity: 0.6;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 992px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2.2rem; }
+    .content-section { padding: 60px 20px; }
+    .admin-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    .daily-life-grid .landscape-span { grid-column: span 1; } /* Stack landscape image */
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.4rem; }
+    h2 { font-size: 2rem; }
+    .section-layout-asymmetric { flex-direction: column; } /* Stack columns */
+    .admin-grid { grid-template-columns: 1fr; } /* Single column */
+    .daily-life-grid { grid-template-columns: 1fr; }
+    .landscape-grid { grid-template-columns: 1fr; }
+    .detail-visuals-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.8rem; }
+    .content-section { padding: 40px 15px; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .hero-content p { font-size: 1rem; }
+    .podcast-link { font-size: 1rem; padding: 10px 20px; }
 }
